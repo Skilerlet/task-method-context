@@ -1,3 +1,6 @@
+import { count } from 'console';
+import { reverse } from 'dns';
+import { eventNames } from 'process';
 import { EventEmitter } from './EventEmitter';
 
 /*
@@ -10,6 +13,13 @@ export const obj = {
     count: 0,
     subscribe() {},
     unsubscribe() {},
+    callback: () => obj.count++,
+    subscribe() {
+        EventEmitter.on('click', this.callback);
+    },
+    unsubscribe() {
+        EventEmitter.off('click', this.callback);
+    },
 };
 
 /*
@@ -20,6 +30,9 @@ obj1.first(1, 2, 3);
  */
 export const obj1 = {
     first(...args) {},
+    first(...args) {
+        this.second.call(null, ...args.reverse());
+    },
     second() {
         // здесь ничего писать не нужно
     },
